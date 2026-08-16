@@ -15,6 +15,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>expert-level</module>
+        <module>master</module>
     </modules>
 
     <properties>

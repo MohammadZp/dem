@@ -401,7 +401,7 @@ One Message
       │
       ▼
 Many Consumers
-```
+```[.mvn](../../../../.mvn)
 
 Think:
 
