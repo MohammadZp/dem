@@ -1,4 +1,4 @@
-# Comprehensive System Design Interview Template & Checklist
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          # Comprehensive System Design Interview Template & Checklist
 
 This template is structured around the systematic 6-step flow of thinking recommended by former Meta Staff Engineers [3, 4]. You can use this blueprint to tackle any complex system design problem (e.g., YouTube, Netflix, Spotify, or Twitter) in technical interviews [1].
 
