@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" modified="2026-10-04T00:00:00.000Z" agent="Gemini Notebook" version="21.0.0" type="device">
+  <diagram id="c1_context" name="C1 System Context">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c1_user" value="&lt;b&gt;Cloud User&lt;/b&gt;&lt;br&gt;[Person]&lt;br&gt;Uploads, syncs, shares, and streams video/files across Mac, Windows, iOS, Web." style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#084B8A;fontColor=#ffffff;strokeColor=#000000;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="280" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c1_system" value="&lt;b&gt;Dropbox &amp; Video Sharing System&lt;/b&gt;&lt;br&gt;[Software System]&lt;br&gt;Provides block-level file chunking, metadata synchronization, deduplication, resumable uploads, and automated video transcoding." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;fontColor=#ffffff;strokeColor=#0b4884;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="230" width="320" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c1_s3" value="&lt;b&gt;Cloud Object Storage (AWS S3)&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;Stores raw block chunks (5MB) and processed video transcoded bitrates (HLS/DASH)." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#666666;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="150" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c1_cdn" value="&lt;b&gt;Global Content Delivery Network (CDN)&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;Caches block chunks and HLS video segments at edge locations for low-latency playback." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#666666;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="310" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c1_auth" value="&lt;b&gt;Auth Gateway / OAuth 2.0 Provider&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;Handles user identity, JWT issuing, and single sign-on authentication." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#666666;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="470" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e_c1_context_1" value="Uploads files/videos, syncs local folders via HTTPS/gRPC" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c1_user" target="c1_system">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c1_context_2" value="Direct block chunk reads/writes &amp; pre-signed URLs" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c1_system" target="c1_s3">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c1_context_3" value="Distributes transcoded video segments and static file chunks" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c1_system" target="c1_cdn">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c1_context_4" value="Validates JWT session tokens" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c1_system" target="c1_auth">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="c2_container" name="C2 Container Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c2_client_app" value="&lt;b&gt;Desktop Client App / Web UI&lt;/b&gt;&lt;br&gt;[Container: Electron / Go / React]&lt;br&gt;Watches folder changes (FSWatch / FSEvents), chunks files into 5MB blocks, calculates SHA-256 hashes, handles delta sync." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#2e6295;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="250" width="220" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_gateway" value="&lt;b&gt;API Gateway &amp; Load Balancer&lt;/b&gt;&lt;br&gt;[Container: NGINX / Envoy]&lt;br&gt;SSL termination, JWT validation, rate limiting, and request routing to microservices." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#2e6295;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="270" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_file_service" value="&lt;b&gt;File &amp; Block Service&lt;/b&gt;&lt;br&gt;[Container: Go Microservice]&lt;br&gt;Generates S3 pre-signed URLs, validates block hashes, manages resumable uploads, and executes block deduplication." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#2e6295;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="100" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_sync_service" value="&lt;b&gt;Metadata Sync Service&lt;/b&gt;&lt;br&gt;[Container: Java / Spring Boot]&lt;br&gt;Tracks folder trees, file versions, and user sync cursors. Pushes change events via long polling / SSE." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#2e6295;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="260" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_transcode_svc" value="&lt;b&gt;Video Transcoding Pipeline&lt;/b&gt;&lt;br&gt;[Container: Go Worker Cluster / FFmpeg]&lt;br&gt;Consumes video upload events, splits videos into segments, encodes to multi-bitrate HLS (1080p, 720p, 480p)." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#2e6295;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="430" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_meta_db" value="&lt;b&gt;Metadata Database&lt;/b&gt;&lt;br&gt;[Container: Amazon DynamoDB / PostgreSQL]&lt;br&gt;Stores file metadata, block index lists (SHA-256), folder structures, and user sync cursors." style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#2B78E4;fontColor=#ffffff;strokeColor=#000000;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="110" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_cache" value="&lt;b&gt;Redis Cluster&lt;/b&gt;&lt;br&gt;[Container: Redis In-Memory]&lt;br&gt;Caches block metadata, active upload session states, and hot file pointers for low latency." style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#2B78E4;fontColor=#ffffff;strokeColor=#000000;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="260" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_kafka" value="&lt;b&gt;Kafka Event Bus&lt;/b&gt;&lt;br&gt;[Container: Apache Kafka]&lt;br&gt;Decouples file metadata updates from video transcoding and notification jobs." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#2e6295;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="430" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_s3" value="&lt;b&gt;S3 Object Storage&lt;/b&gt;&lt;br&gt;[Container: Cloud Storage]&lt;br&gt;Stores immutable 5MB block chunks and HLS video playlists (.m3u8, .ts)." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#666666;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="590" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e_c2_container_1" value="HTTPS / gRPC REST Calls" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c2_client_app" target="c2_gateway">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c2_container_2" value="Route /files/upload, /files/blocks" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c2_gateway" target="c2_file_service">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c2_container_3" value="Route /sync/changes, /sync/cursor" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c2_gateway" target="c2_sync_service">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c2_container_4" value="Write block index &amp; file records" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c2_file_service" target="c2_meta_db">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c2_container_5" value="Cache upload session progress" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c2_file_service" target="c2_cache">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c2_container_6" value="Query file changes by cursor" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c2_sync_service" target="c2_meta_db">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c2_container_7" value="Publish &quot;file_uploaded&quot; event" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c2_file_service" target="c2_kafka">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c2_container_8" value="Consume &quot;video_uploaded&quot; jobs" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c2_kafka" target="c2_transcode_svc">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c2_container_9" value="Write transcoded HLS chunks" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c2_transcode_svc" target="c2_s3">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c2_container_10" value="Direct 5MB block upload via Pre-Signed URL" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c2_client_app" target="c2_s3">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="c3_component" name="C3 Component Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c3_box" value="&lt;b&gt;File &amp; Block Service Boundary&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=left;spacingLeft=10;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="80" width="540" height="480" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_controller" value="&lt;b&gt;Upload REST Controller&lt;/b&gt;&lt;br&gt;[Component: Go Gin]&lt;br&gt;Exposes `/files/initiate`, `/files/blocks/verify`, `/files/complete` endpoints." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;fontColor=#000000;strokeColor=#5d83a8;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="130" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_dedup" value="&lt;b&gt;Block Deduplication Engine&lt;/b&gt;&lt;br&gt;[Component: Go Service]&lt;br&gt;Checks if block SHA-256 hash already exists in Metadata DB. Skips re-upload if block is present." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;fontColor=#000000;strokeColor=#5d83a8;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="130" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_presigned" value="&lt;b&gt;Pre-Signed URL Generator&lt;/b&gt;&lt;br&gt;[Component: AWS SDK Go]&lt;br&gt;Generates time-bound (15-min TTL) AWS S3 PUT URLs for direct client block upload." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;fontColor=#000000;strokeColor=#5d83a8;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="270" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_verifier" value="&lt;b&gt;Trust-But-Verify Worker&lt;/b&gt;&lt;br&gt;[Component: Go Worker]&lt;br&gt;Verifies S3 object existence and MD5/Etag before committing block status in database." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;fontColor=#000000;strokeColor=#5d83a8;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="270" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_meta_mgr" value="&lt;b&gt;File Metadata Manager&lt;/b&gt;&lt;br&gt;[Component: Go Service]&lt;br&gt;Assembles file manifest from block hashes, updates version history, and notifies Kafka." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;fontColor=#000000;strokeColor=#5d83a8;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="420" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_ext_client" value="&lt;b&gt;Desktop Client App&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#2e6295;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="200" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_ext_s3" value="&lt;b&gt;Amazon S3&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#666666;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="810" y="270" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_ext_db" value="&lt;b&gt;DynamoDB Metadata Store&lt;/b&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#2B78E4;fontColor=#ffffff;strokeColor=#000000;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="810" y="420" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e_c3_component_1" value="1. POST /files/initiate (manifest)" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c3_ext_client" target="c3_controller">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c3_component_2" value="2. Check SHA-256 block list" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c3_controller" target="c3_dedup">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c3_component_3" value="3. Request URLs for missing blocks" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c3_dedup" target="c3_presigned">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c3_component_4" value="4. Return Pre-Signed URLs" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c3_presigned" target="c3_controller">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c3_component_5" value="5. Client signals block upload done" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c3_controller" target="c3_verifier">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c3_component_6" value="6. Verify S3 Object HEAD" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c3_verifier" target="c3_ext_s3">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c3_component_7" value="7. Confirm block verified" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c3_verifier" target="c3_meta_mgr">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c3_component_8" value="8. Commit file manifest record" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#444444;fontSize=10;" edge="1" parent="1" source="c3_meta_mgr" target="c3_ext_db">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="c4_sequence" name="C4 Execution Sequence">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq_client" value="&lt;b&gt;Client App&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#084B8A;fontColor=#ffffff;strokeColor=#000000;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="40" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="line_client" value="" style="line;strokeWidth=1;dashed=1;html=1;verticalAlign=bottom;startArrow=none;endArrow=none;strokeColor=#888888;" vertex="1" parent="1">
+          <mxGeometry x="109" y="90" width="2" height="650" as="geometry" />
+        </mxCell>
+        <mxCell id="seq_svc" value="&lt;b&gt;File Service&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#000000;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="40" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="line_svc" value="" style="line;strokeWidth=1;dashed=1;html=1;verticalAlign=bottom;startArrow=none;endArrow=none;strokeColor=#888888;" vertex="1" parent="1">
+          <mxGeometry x="309" y="90" width="2" height="650" as="geometry" />
+        </mxCell>
+        <mxCell id="seq_db" value="&lt;b&gt;Metadata DB&lt;/b&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#2B78E4;fontColor=#ffffff;strokeColor=#000000;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="40" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="line_db" value="" style="line;strokeWidth=1;dashed=1;html=1;verticalAlign=bottom;startArrow=none;endArrow=none;strokeColor=#888888;" vertex="1" parent="1">
+          <mxGeometry x="509" y="90" width="2" height="650" as="geometry" />
+        </mxCell>
+        <mxCell id="seq_s3" value="&lt;b&gt;Amazon S3&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#000000;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="40" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="line_s3" value="" style="line;strokeWidth=1;dashed=1;html=1;verticalAlign=bottom;startArrow=none;endArrow=none;strokeColor=#888888;" vertex="1" parent="1">
+          <mxGeometry x="709" y="90" width="2" height="650" as="geometry" />
+        </mxCell>
+        <mxCell id="seq_trans" value="&lt;b&gt;Transcoder Worker&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#000000;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="40" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="line_trans" value="" style="line;strokeWidth=1;dashed=1;html=1;verticalAlign=bottom;startArrow=none;endArrow=none;strokeColor=#888888;" vertex="1" parent="1">
+          <mxGeometry x="919" y="90" width="2" height="650" as="geometry" />
+        </mxCell>
+        <mxCell id="e_c4_sequence_1" value="1. Chunk file into 5MB blocks &amp; compute SHA-256 hashes" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="line_client" target="line_svc">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c4_sequence_2" value="2. POST /files/initiate {file_name, size, block_hashes}" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="line_client" target="line_svc">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c4_sequence_3" value="3. Query existing block hashes (deduplication check)" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="line_svc" target="line_db">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c4_sequence_4" value="4. Return existing vs missing block hashes" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="line_db" target="line_svc">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c4_sequence_5" value="5. Return pre-signed S3 PUT URLs for missing blocks" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="line_svc" target="line_client">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c4_sequence_6" value="6. PUT block chunk 1..N directly to S3 URL" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="line_client" target="line_s3">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c4_sequence_7" value="7. 200 OK + ETag checksum" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="line_s3" target="line_client">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c4_sequence_8" value="8. POST /files/complete {file_id, uploaded_blocks}" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="line_client" target="line_svc">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c4_sequence_9" value="9. Trust-But-Verify HEAD S3 Object requests" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="line_svc" target="line_s3">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c4_sequence_10" value="10. Commit file manifest &amp; update user sync cursor" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="line_svc" target="line_db">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c4_sequence_11" value="11. Publish Kafka event &quot;video_file_committed&quot;" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="line_svc" target="line_trans">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e_c4_sequence_12" value="12. Read raw video, encode HLS master playlist &amp; .ts segments to S3" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="line_trans" target="line_s3">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

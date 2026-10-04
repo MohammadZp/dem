@@ -1,0 +1,257 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" modified="2026-10-04" agent="Gemini Notebook" version="21.0.0" type="device" pages="4">
+  <diagram id="c1_context" name="C1 - System Context">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c1_title" value="&lt;b&gt;C1: System Context Diagram — Ticketmaster System&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="500" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c1_user" value="&lt;b&gt;Ticket Customer&lt;/b&gt;&lt;br/&gt;[Person]&lt;br/&gt;&lt;br/&gt;Browses events, searches seats, reserves tickets, and completes payments." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#073B6F;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="50" y="250" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c1_admin" value="&lt;b&gt;Event Organizer / Admin&lt;/b&gt;&lt;br/&gt;[Person]&lt;br/&gt;&lt;br/&gt;Creates events, sets up venue seat maps, and configures waiting room limits." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#073B6F;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="50" y="480" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c1_system" value="&lt;b&gt;Ticketmaster Booking System&lt;/b&gt;&lt;br/&gt;[Software System]&lt;br/&gt;&lt;br/&gt;Core enterprise platform handling high-concurrency event search, 2-phase seat reservation, virtual waiting queues, and ticketing lifecycle." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168A7;strokeColor=#0E5285;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="450" y="320" width="300" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c1_stripe" value="&lt;b&gt;Stripe Payment Gateway&lt;/b&gt;&lt;br/&gt;[External System]&lt;br/&gt;&lt;br/&gt;Handles credit card authorizations, tokenized payment intents, and webhooks." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6C757D;strokeColor=#495057;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="900" y="250" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c1_email" value="&lt;b&gt;Email &amp; Notification Gateway&lt;/b&gt;&lt;br/&gt;[External System]&lt;br/&gt;&lt;br/&gt;Sends ticket barcodes, booking confirmations, and queue notifications." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6C757D;strokeColor=#495057;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="900" y="480" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="e1_1" value="Searches &amp; Books Tickets&lt;br/&gt;[HTTPS / REST / SSE]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c1_user" target="c1_system">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e1_2" value="Manages Events &amp; Queues&lt;br/&gt;[HTTPS / Admin Portal]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c1_admin" target="c1_system">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e1_3" value="Processes Payment Intents&lt;br/&gt;[HTTPS REST &amp; Webhooks]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c1_system" target="c1_stripe">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e1_4" value="Sends Confirmation Emails&lt;br/&gt;[SMTP / REST API]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c1_system" target="c1_email">
+          <mxGeometry as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="c2_container" name="C2 - Container Diagram">
+    <mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c2_title" value="&lt;b&gt;C2: Container Diagram — Ticketmaster System&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="20" width="500" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_client" value="&lt;b&gt;Web &amp; Mobile App&lt;/b&gt;&lt;br/&gt;[Container: React / Native]&lt;br/&gt;Interactive UI for seat selection, waiting queue, and payment checkout." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="50" y="380" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_gateway" value="&lt;b&gt;API Gateway&lt;/b&gt;&lt;br/&gt;[Container: AWS API Gateway / NGINX]&lt;br/&gt;Authentication (JWT), rate limiting, SSL, and request routing." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="280" y="380" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_crud" value="&lt;b&gt;Event CRUD Service&lt;/b&gt;&lt;br/&gt;[Container: Go Microservice]&lt;br/&gt;Provides event, venue, performer metadata, and cached seat maps." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="540" y="180" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_search" value="&lt;b&gt;Search Service&lt;/b&gt;&lt;br/&gt;[Container: Java Microservice]&lt;br/&gt;Executes low-latency full-text and geospatial search queries." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="540" y="310" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_booking" value="&lt;b&gt;Booking Service&lt;/b&gt;&lt;br/&gt;[Container: Go Microservice]&lt;br/&gt;Handles 2-phase reservation, Redis locks, and Stripe payment confirmation." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="540" y="450" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_vqueue" value="&lt;b&gt;Virtual Waiting Queue Worker&lt;/b&gt;&lt;br/&gt;[Container: Go Worker]&lt;br/&gt;Manages spike traffic, holds user slots in Redis sorted set, pushes SSE." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="540" y="590" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_redis" value="&lt;b&gt;Redis Distributed Lock &amp; Cache&lt;/b&gt;&lt;br/&gt;[Container: Redis Cluster]&lt;br/&gt;10-min TTL ticket locks, static metadata cache, queue sorted sets." style="shape=cylinder3;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="850" y="180" width="180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_postgres" value="&lt;b&gt;Primary Relational DB&lt;/b&gt;&lt;br/&gt;[Container: PostgreSQL]&lt;br/&gt;ACID store for events, venues, performers, tickets, and bookings." style="shape=cylinder3;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="850" y="380" width="180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_kafka" value="&lt;b&gt;CDC Message Stream&lt;/b&gt;&lt;br/&gt;[Container: Apache Kafka]&lt;br/&gt;Captures PostgreSQL CDC logs for asynchronous indexing." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="850" y="550" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_elastic" value="&lt;b&gt;ElasticSearch Cluster&lt;/b&gt;&lt;br/&gt;[Container: ElasticSearch]&lt;br/&gt;Inverted index &amp; geospatial store for fast event search." style="shape=cylinder3;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="380" width="180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_stripe_ext" value="&lt;b&gt;Stripe Payment API&lt;/b&gt;&lt;br/&gt;[External System]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6C757D;strokeColor=#495057;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="850" y="700" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="e2_1" value="HTTPS / WSS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_client" target="c2_gateway">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_2" value="Routes /event/*" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_gateway" target="c2_crud">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_3" value="Routes /search" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_gateway" target="c2_search">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_4" value="Routes /booking/*" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_gateway" target="c2_booking">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_5" value="Routes /queue/* &amp; SSE" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_gateway" target="c2_vqueue">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_6" value="Cache Reads / Writes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_crud" target="c2_redis">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_7" value="SQL Reads" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_crud" target="c2_postgres">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_8" value="Query Inverted Index" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_search" target="c2_elastic">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_9" value="10-min TTL Lock" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_booking" target="c2_redis">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_10" value="ACID Commit ('booked')" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_booking" target="c2_postgres">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_11" value="Charge Intent &amp; Webhook" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_booking" target="c2_stripe_ext">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_12" value="Sorted Set Queue &amp; SSE" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_vqueue" target="c2_redis">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_13" value="Debezium CDC Stream" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_postgres" target="c2_kafka">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e2_14" value="Index Event Docs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c2_kafka" target="c2_elastic">
+          <mxGeometry as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="c3_component" name="C3 - Component Diagram (Booking Service)">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c3_title" value="&lt;b&gt;C3: Component Diagram — Booking Microservice&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="500" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_box" value="&lt;b&gt;Booking Service Boundary&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#2E6295;strokeWidth=2;dashed=1;verticalAlign=top;align=left;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="100" width="700" height="680" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_ctrl" value="&lt;b&gt;Booking REST Controller&lt;/b&gt;&lt;br/&gt;[Go Gin / Router]&lt;br/&gt;Handles POST /bookings/reserve and POST /bookings/confirm requests." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5D82A8;fontColor=#000000;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="480" y="140" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_res_handler" value="&lt;b&gt;Reservation Handler&lt;/b&gt;&lt;br/&gt;[Component]&lt;br/&gt;Validates ticket eligibility and manages 10-minute hold." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5D82A8;fontColor=#000000;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="300" y="280" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_pay_handler" value="&lt;b&gt;Payment &amp; Confirmation Handler&lt;/b&gt;&lt;br/&gt;[Component]&lt;br/&gt;Coordinates Stripe charge authorization and webhook callbacks." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5D82A8;fontColor=#000000;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="660" y="280" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_lock_mgr" value="&lt;b&gt;Distributed Lock Manager&lt;/b&gt;&lt;br/&gt;[Component]&lt;br/&gt;Encapsulates Redis client calls for atomic key setting with TTL." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5D82A8;fontColor=#000000;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="300" y="430" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_stripe_client" value="&lt;b&gt;Stripe SDK Client&lt;/b&gt;&lt;br/&gt;[Component]&lt;br/&gt;Interacts with Stripe Payment Intents API." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5D82A8;fontColor=#000000;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="660" y="430" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_ticket_repo" value="&lt;b&gt;Ticket Repository&lt;/b&gt;&lt;br/&gt;[Component]&lt;br/&gt;Executes SQL transactions (UPDATE tickets SET status='booked')." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5D82A8;fontColor=#000000;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="480" y="570" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_sse_notifier" value="&lt;b&gt;SSE Seat Event Notifier&lt;/b&gt;&lt;br/&gt;[Component]&lt;br/&gt;Publishes seat status change events to client connections." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5D82A8;fontColor=#000000;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="480" y="670" width="240" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_ext_gw" value="&lt;b&gt;API Gateway&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="50" y="140" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_ext_redis" value="&lt;b&gt;Redis Cluster&lt;/b&gt;" style="shape=cylinder3;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="50" y="430" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_ext_pg" value="&lt;b&gt;PostgreSQL DB&lt;/b&gt;" style="shape=cylinder3;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="50" y="570" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_ext_stripe" value="&lt;b&gt;Stripe API&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6C757D;strokeColor=#495057;fontColor=#ffffff;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="430" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="e3_1" value="HTTP REST Request" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c3_ext_gw" target="c3_ctrl">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e3_2" value="Delegate Reserve" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c3_ctrl" target="c3_res_handler">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e3_3" value="Delegate Confirm" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c3_ctrl" target="c3_pay_handler">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e3_4" value="Acquire 10-min TTL Lock" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c3_res_handler" target="c3_lock_mgr">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e3_5" value="SETNX ticket:{id} 1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c3_lock_mgr" target="c3_ext_redis">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e3_6" value="Process Payment Intent" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c3_pay_handler" target="c3_stripe_client">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e3_7" value="HTTPS REST &amp; Webhook" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c3_stripe_client" target="c3_ext_stripe">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e3_8" value="Commit Final Booking" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c3_pay_handler" target="c3_ticket_repo">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e3_9" value="SQL Transaction" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c3_ticket_repo" target="c3_ext_pg">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e3_10" value="Trigger Seat State Change" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="c3_pay_handler" target="c3_sse_notifier">
+          <mxGeometry as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="c4_code" name="C4 - Detailed Execution Flow">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c4_title" value="&lt;b&gt;C4: Detailed Execution Sequence — Two-Phase Reservation &amp; Booking Flow&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="20" width="650" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" value="&lt;b&gt;1. Reserve Request&lt;/b&gt;&lt;br/&gt;Client sends POST /bookings/reserve with ticket_id" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4E6F1;strokeColor=#2980B9;fontSize=12;align=left;" vertex="1" parent="1">
+          <mxGeometry x="100" y="100" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" value="&lt;b&gt;2. Set Redis Distributed Lock&lt;/b&gt;&lt;br/&gt;Booking Service executes: &lt;code&gt;SET ticket_lock:123 user_456 NX EX 600&lt;/code&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4E6F1;strokeColor=#2980B9;fontSize=12;align=left;" vertex="1" parent="1">
+          <mxGeometry x="100" y="200" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="&lt;b&gt;3. Return Reservation Success&lt;/b&gt;&lt;br/&gt;Returns 200 OK with 10-minute countdown timer to Client." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5F5E3;strokeColor=#27AE60;fontSize=12;align=left;" vertex="1" parent="1">
+          <mxGeometry x="100" y="300" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" value="&lt;b&gt;4. Payment Checkout&lt;/b&gt;&lt;br/&gt;Client submits credit card info directly to Stripe API." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCF3CF;strokeColor=#F39C12;fontSize=12;align=left;" vertex="1" parent="1">
+          <mxGeometry x="600" y="100" width="450" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s5" value="&lt;b&gt;5. Confirm &amp; Webhook Callback&lt;/b&gt;&lt;br/&gt;Stripe calls webhook &lt;code&gt;POST /bookings/confirm&lt;/code&gt; with payment token." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCF3CF;strokeColor=#F39C12;fontSize=12;align=left;" vertex="1" parent="1">
+          <mxGeometry x="600" y="200" width="450" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s6" value="&lt;b&gt;6. PostgreSQL Transaction Commit&lt;/b&gt;&lt;br/&gt;&lt;code&gt;BEGIN; UPDATE tickets SET status='booked', user_id=456 WHERE id=123; COMMIT;&lt;/code&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4E6F1;strokeColor=#2980B9;fontSize=12;align=left;" vertex="1" parent="1">
+          <mxGeometry x="600" y="300" width="450" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s7" value="&lt;b&gt;7. Release Redis Lock &amp; SSE Broadcast&lt;/b&gt;&lt;br/&gt;Delete Redis key &lt;code&gt;ticket_lock:123&lt;/code&gt; and broadcast 'booked' state via SSE." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5F5E3;strokeColor=#27AE60;fontSize=12;align=left;" vertex="1" parent="1">
+          <mxGeometry x="600" y="400" width="450" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s8_timeout" value="&lt;b&gt;AUTOMATIC TIMEOUT FALLBACK (If Payment Not Completed within 10 Minutes):&lt;/b&gt;&lt;br/&gt;1. Redis automatically drops key &lt;code&gt;ticket_lock:123&lt;/code&gt; after 600 seconds.&lt;br/&gt;2. PostgreSQL status remains &lt;code&gt;available&lt;/code&gt; (unmodified).&lt;br/&gt;3. Next client querying event tickets instantly sees seat 123 as available." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FADBD8;strokeColor=#CB4335;fontSize=12;align=left;" vertex="1" parent="1">
+          <mxGeometry x="100" y="520" width="950" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e4_1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="s1" target="s2">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e4_2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="s2" target="s3">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e4_3" value="Proceed to Checkout" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="s3" target="s4">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e4_4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="s4" target="s5">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e4_5" value="Valid Payment Token" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="s5" target="s6">
+          <mxGeometry as="geometry" />
+        </mxCell>
+        <mxCell id="e4_6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2E6295;strokeWidth=2;fontColor=#333333;" edge="1" parent="1" source="s6" target="s7">
+          <mxGeometry as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
