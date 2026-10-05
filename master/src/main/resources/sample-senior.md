@@ -2219,3 +2219,192 @@ order.getItems().size();
 در هر دو روش باید از Parameter Binding استفاده کنیم و از اتصال مستقیم ورودی کاربر به Query با String Concatenation پرهیز کنیم تا خطر SQL Injection کاهش یابد.
 
 نتیجه: `Native SQL` زمانی مناسب‌تر است که به قابلیت‌های اختصاصی Database، Queryهای پیچیده یا کنترل دقیق‌تری روی SQL نیاز داشته باشیم. در غیر این صورت، `HQL/JPQL` معمولاً به دلیل خوانایی، کار با Entityها و وابستگی کمتر به Database انتخاب مناسبی است. تصمیم نهایی باید بر اساس نیاز واقعی و اندازه‌گیری Performance باشد.
+# سؤال 46
+
+**سؤال:** در رعایت اصول Clean Code، چه تکنیک‌هایی برای بهبود خوانایی کد در پروژه‌های جاوا پیشنهاد می‌کنید؟
+
+**راهنما:** به تاثیر خوانایی بر نگهداری و توسعه توجه کنید.
+
+**سطح:** Senior
+
+### پاسخ
+
+برای بهبود خوانایی کد در Java، هدف اصلی این است که کد تا حد ممکن **واضح، قابل فهم و قابل تغییر** باشد و نیاز به توضیحات اضافی کاهش پیدا کند.
+
+مهم‌ترین تکنیک‌ها:
+
+* استفاده از نام‌های معنادار برای `Class`، `Method`، `Variable` و `Exception`.
+* هر `Method` یک مسئولیت مشخص داشته باشد و بیش از حد بزرگ و پیچیده نباشد.
+* رعایت `Single Responsibility` و سایر اصول `SOLID`.
+* کاهش `if/else`های تو در تو و `Nested Logic` با استفاده از `Early Return` و شکستن منطق پیچیده به متدهای کوچک‌تر.
+* جلوگیری از `Magic Number` و `Magic String` و استفاده از `Constants` یا `Enum`.
+* حذف کدهای تکراری با رعایت `DRY`، البته بدون ایجاد abstractionهای غیرضروری.
+* استفاده از `Exception`های مشخص و پرهیز از `catch`های عمومی مثل `catch (Exception e)` بدون دلیل.
+* رعایت `Formatting` و یک استاندارد مشخص برای نام‌گذاری و ساختار کد.
+* استفاده مناسب از `Comments`؛ کامنت باید بیشتر دلیل یک تصمیم غیر بدیهی را توضیح دهد، نه اینکه صرفاً کد را تکرار کند.
+* نوشتن `Unit Test`های خوانا که رفتار مورد انتظار سیستم را مشخص کنند.
+
+در پروژه‌های Enterprise، خوانایی مستقیماً روی **Maintenance، Code Review، Debugging و Onboarding اعضای جدید** تأثیر دارد.
+
+**نتیجه:**
+Clean Code یعنی کدی که با نام‌گذاری مناسب، مسئولیت‌های مشخص، پیچیدگی کم و ساختار منظم، برای توسعه‌دهنده دیگری هم به‌راحتی قابل فهم و تغییر باشد.
+
+---
+
+# سؤال 47
+
+**سؤال:** در چه شرایطی Refactoring کد ضروری است و چه مزایایی دارد؟
+
+**راهنما:** به تاثیر Refactoring بر کیفیت و توسعه‌پذیری فکر کنید.
+
+**سطح:** Senior
+
+### پاسخ
+
+`Refactoring` یعنی تغییر ساختار داخلی کد بدون تغییر در رفتار قابل مشاهده آن.
+
+Refactoring زمانی اهمیت بیشتری پیدا می‌کند که کد دارای `Code Smell`هایی مانند:
+
+* متدها و کلاس‌های بیش از حد بزرگ
+* `Duplicate Code`
+* وابستگی شدید بین بخش‌ها
+* `Long Parameter List`
+* `Nested Conditional`های پیچیده
+* مسئولیت‌های متعدد در یک کلاس
+* تغییر یک قابلیت که نیازمند اصلاح چندین بخش نامرتبط است
+* سخت بودن نوشتن یا نگهداری `Test`
+
+باشد.
+
+بهتر است Refactoring به‌صورت **تدریجی و همراه با Test** انجام شود، نه اینکه بدون کنترل بخش بزرگی از سیستم بازنویسی شود.
+
+مهم‌ترین مزایا:
+
+* افزایش `Maintainability`
+* کاهش `Technical Debt`
+* کاهش پیچیدگی و احتمال خطا
+* افزایش `Testability`
+* ساده‌تر شدن اضافه کردن قابلیت‌های جدید
+* کاهش هزینه تغییرات در آینده
+
+نکته مهم این است که Refactoring نباید صرفاً برای زیباتر شدن کد انجام شود؛ باید **ارزش فنی مشخصی** ایجاد کند و با نیاز پروژه متناسب باشد.
+
+**نتیجه:**
+Refactoring زمانی ضروری است که ساختار فعلی کد، تغییر، تست و نگهداری را دشوار کرده باشد. هدف آن تغییر ساختار بدون تغییر رفتار و در نتیجه بهبود کیفیت، Maintainability و توسعه‌پذیری است.
+
+---
+
+# سؤال 48
+
+**سؤال:** در پیاده‌سازی CI/CD برای پروژه‌های جاوا، چه ملاحظاتی برای اطمینان از کیفیت و امنیت باید رعایت شود؟
+
+**راهنما:** به تاثیر تست و امنیت در چرخه استقرار توجه کنید.
+
+**سطح:** Senior
+
+### پاسخ
+
+در `CI/CD` باید Pipeline طوری طراحی شود که قبل از Deployment، کیفیت و امنیت نرم‌افزار به‌صورت خودکار بررسی شود.
+
+در بخش `CI` معمولاً این مراحل مهم هستند:
+
+1. **Build و Dependency Resolution**
+2. اجرای `Unit Test` و `Integration Test`
+3. بررسی `Code Quality` و `Static Analysis`
+4. بررسی `Code Coverage` در صورت داشتن threshold مناسب
+5. `Dependency / Vulnerability Scanning`
+6. بررسی Secretها و جلوگیری از قرار گرفتن credential در repository
+7. Build کردن Artifact یا Docker Image
+
+در بخش `CD` نیز باید مواردی مانند این‌ها در نظر گرفته شوند:
+
+* استفاده از `Environment`های جداگانه مانند Test، Staging و Production
+* مدیریت Secretها خارج از source code
+* استفاده از `Artifact` مشخص و immutable برای Deployment
+* `Approval Gate` برای محیط‌های حساس در صورت نیاز
+* `Rollback` یا `Roll-forward` strategy
+* Health Check بعد از Deployment
+* `Observability` و بررسی Metrics/Logs بعد از Release
+* استفاده از `Least Privilege` برای دسترسی‌های Pipeline و Deployment
+
+همچنین Pipeline نباید فقط روی Application Code تمرکز کند؛ امنیت `Dependencies`، Container Image، CI Runner و Credentials نیز باید بررسی شود.
+
+**نتیجه:**
+یک CI/CD مناسب باید قبل از Deployment، Build، Test، Static Analysis و Security Scanning را خودکار کند و در CD نیز Secret Management، کنترل دسترسی، Health Check و Rollback را در نظر بگیرد.
+
+---
+
+# سؤال 49
+
+**سؤال:** در انتخاب استراتژی Caching برای سرویس‌های جاوا، چه عواملی باید بررسی شود؟
+
+**راهنما:** به تاثیر Cache بر کارایی و هماهنگی داده‌ها توجه کنید.
+
+**سطح:** Senior
+
+### پاسخ
+
+در انتخاب `Caching Strategy` فقط افزایش سرعت مهم نیست؛ باید بین **Performance، Consistency، Memory و Complexity** تعادل برقرار شود.
+
+مهم‌ترین عوامل عبارت‌اند از:
+
+* **Access Pattern:** داده چقدر خوانده و چقدر تغییر داده می‌شود؟
+* **Data Volatility:** داده چقدر تغییر می‌کند؟
+* **Consistency Requirement:** آیا `Stale Data` قابل قبول است؟
+* **Cache Size و Memory:** چه مقدار داده می‌توان نگه داشت؟
+* **TTL:** داده چه مدت می‌تواند معتبر باشد؟
+* **Eviction Policy:** مانند `LRU` در چه شرایطی باید داده حذف شود؟
+* **Cache Hit Ratio:** چند درصد درخواست‌ها از Cache پاسخ می‌گیرند؟
+* **Distributed بودن سرویس:** در چند instance اجرا می‌شود؟
+
+برای یک سرویس ساده و Single Instance ممکن است `In-Memory Cache` کافی باشد. اما در یک سیستم Distributed معمولاً Cache مشترکی مانند `Redis` مناسب‌تر است.
+
+همچنین باید مشخص شود از چه الگوی caching استفاده می‌شود؛ مثلاً:
+
+* `Cache-Aside`
+* `Read-Through`
+* `Write-Through`
+* `Write-Behind`
+
+یکی از چالش‌های مهم نیز **Cache Invalidation** است؛ یعنی وقتی داده اصلی تغییر می‌کند، Cache چگونه به‌روز یا invalidate شود.
+
+در Spring می‌توان از `Spring Cache Abstraction` و Providerهایی مانند Caffeine یا Redis استفاده کرد.
+
+**نتیجه:**
+برای انتخاب Cache باید Access Pattern، میزان تغییر داده، نیاز Consistency، TTL، Eviction، حجم Cache، Distributed بودن سیستم و هزینه Invalidation بررسی شود. Cache نامناسب می‌تواند علاوه بر کاهش Consistency، پیچیدگی سیستم را افزایش دهد.
+
+---
+
+# سؤال 50
+
+**سؤال:** در انتخاب ابزار Build برای پروژه‌های جاوا (مانند Maven یا Gradle)، چه معیارهایی باید مدنظر قرار گیرد؟
+
+**راهنما:** به تاثیر ابزار Build بر فرآیند توسعه و استقرار توجه کنید.
+
+**سطح:** Senior
+
+### پاسخ
+
+در انتخاب `Build Tool` نباید فقط به محبوبیت ابزار توجه کرد؛ باید نیاز پروژه و تیم را در نظر گرفت.
+
+معیارهای مهم عبارت‌اند از:
+
+* **Dependency Management:** مدیریت dependencyها، نسخه‌ها و transitive dependencies.
+* **Build Performance:** سرعت Build و قابلیت‌هایی مانند incremental build و caching.
+* **پشتیبانی از CI/CD:** اجرای پایدار و قابل تکرار در Pipeline.
+* **Plugin Ecosystem:** وجود Pluginهای مورد نیاز پروژه.
+* **Multi-Module Support:** اهمیت زیادی در پروژه‌های Enterprise دارد.
+* **Reproducible Builds:** اطمینان از اینکه Build در محیط‌های مختلف نتیجه قابل پیش‌بینی داشته باشد.
+* **Maintainability:** خوانایی و سادگی فایل‌های Build.
+* **Team Expertise:** میزان آشنایی تیم با ابزار.
+* **Integration:** سازگاری با IDE، Docker، Testing و ابزارهای Quality/Security.
+* **Build Configuration Complexity:** اینکه پروژه چقدر نیاز به Build Logic سفارشی دارد.
+
+`Maven` به دلیل ساختار convention-based و استاندارد بودن `pom.xml` در بسیاری از پروژه‌های Enterprise انتخاب رایجی است.
+
+`Gradle` انعطاف‌پذیری و قابلیت شخصی‌سازی بیشتری دارد و در پروژه‌های پیچیده می‌تواند Build Logic قدرتمندتری ارائه دهد.
+
+بنابراین نمی‌توان گفت یکی همیشه بهتر از دیگری است؛ انتخاب باید بر اساس **نیاز پروژه، پیچیدگی Build، سرعت، اکوسیستم و توانایی تیم** انجام شود.
+
+**نتیجه:**
+در انتخاب Maven یا Gradle باید Dependency Management، Performance، CI/CD، Pluginها، Multi-Module بودن، Maintainability، Reproducibility و تخصص تیم را بررسی کرد و ابزار را بر اساس نیاز واقعی پروژه انتخاب کرد.
